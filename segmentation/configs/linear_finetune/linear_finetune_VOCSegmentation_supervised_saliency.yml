@@ -1,0 +1,33 @@
+# Dataset
+train_db_name: oxford-iiit-pet #VOCSegmentation #
+train_db_kwargs:
+   split: trainaug
+   batch_size: 16
+val_db_name: oxford-iiit-pet #VOCSegmentation #
+val_db_kwargs:
+   batch_size: 16
+num_workers: 4
+#needs to be changed
+mean: [0.4632, 0.4796, 0.3744]
+std: [0.2329, 0.2243, 0.2417]
+# Model
+backbone: 'resnet50'
+backbone_kwargs:
+   dilated: True
+head: 'deeplab'
+pretraining: '/cs/student/msc/dsml/2023/mdavudov/ADL/MaskContrast/RESULTS/VOCSegmentation_supervised_saliency_model/checkpoint.pth.tar' #/path/to/checkpoint.pth.tar # Change this.
+
+# Optimizer
+epochs: 60
+scheduler: step
+scheduler_kwargs:
+   lr_decay_rate: 0.1
+   lr_decay_epochs: [25]
+
+optimizer: sgd 
+optimizer_kwargs:
+   lr: 0.1
+   weight_decay: 0.0001
+   momentum: 0.9
+   nesterov: False
+freeze_batchnorm: 'all'
